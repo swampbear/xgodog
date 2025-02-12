@@ -1,27 +1,13 @@
 def on_button_pressed_a():
-    xgo.init_xgo_serial(SerialPin.P2, SerialPin.P1)
-    xgo.get_version()
-    xgo.leg_lift(10)
-    basic.show_leds("""
-    . . . . .
-    . # . # .
-    . . # . .
-    . . . . .
-    . . . . .
-    """)
-    music.play(music.string_playable("- - - - - - - - ", 120),
-        music.PlaybackMode.UNTIL_DONE)
-    xgo.leg_lift(0)
+    basic.show_icon(IconNames.ASLEEP)
+    xgo.execution_action(xgo.action_enum.SQUAT)
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
-def on_button_pressed_b():
-    xgo.get_posestate(xgo.pose_enum.POSE1)
-    
-    basic.show_leds("""
-    . . . . .
-    . . . . .
-    . . # . .
-    . # . # .
-    . . . . .
-    """)
-input.on_button_pressed(Button.B, on_button_pressed_b)
+def on_gesture_shake():
+    music._play_default_background(music.built_in_playable_melody(Melodies.NYAN),
+        music.PlaybackMode.UNTIL_DONE)
+input.on_gesture(Gesture.SHAKE, on_gesture_shake)
+
+xgo.init_xgo_serial(SerialPin.P14, SerialPin.P13)
+music.play(music.string_playable("C D E F G A B C5 ", 350),
+    music.PlaybackMode.UNTIL_DONE)
